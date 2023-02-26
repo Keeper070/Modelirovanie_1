@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Modelirovanie_1
@@ -54,21 +56,19 @@ namespace Modelirovanie_1
 
         private void button_to_input(object sender, EventArgs e) => label_input_main(sender, e);
 
-        private Stack<char> _liveStack = new Stack<char>();
-        private Queue<char> _liveQueue = new Queue<char>();
+        private readonly Stack<char> _liveStack = new Stack<char>();
+        private readonly Queue<char> _liveQueue = new Queue<char>();
         private int _liveIndex;
         private bool _isFirst = true;
         private string _workString;
+        private bool _end;
 
         // Перевод из инфиксной формы в постфиксную
-        public string TranslateToPostfix(string input)
+        public async Task<string> TranslateToPostfix(string input)
         {
             Stack<char> stack;
             Queue<char> queue;
             int index;
-
-            // var stackBuff = new Stack<char>();
-            // var queueBuff = new Queue<char>();
 
             if (_mode)
             {
@@ -154,21 +154,20 @@ namespace Modelirovanie_1
                     }
 
                 ShowStack(stack);
-
+                ShowChangeInputStr(index, _workString);
+                ShowQueue(queue);
+                ShowChangeOut(queue);
                 if (_mode)
                 {
                     _liveIndex++;
-                    // foreach (var c in queue)
-                    //     queueBuff.Enqueue(c);
-                    // foreach (var c in stack)
-                    //     stackBuff.Push(c);
                     break;
                 }
 
                 index++;
+                await Task.Delay(3000);
             }
 
-            if (!_mode || _workString.Length <= index)
+            if (_workString.Length <= index)
             {
                 if (stack.Count != 0)
                     for (var i = stack.Count - 1; i >= 0; i--)
@@ -178,25 +177,30 @@ namespace Modelirovanie_1
                         else
                             stack.Pop();
                         ShowStack(stack);
+                        if (_mode)
+                            break;
                     }
+                else
+                    _end = true;
             }
 
-            var result = new StringBuilder();
-            foreach (var c in queue)
-                result.Append(c);
+            // Выход в буквах
+            var result = ShowQueue(queue);
 
-            // _liveQueue = queueBuff;
-            // _liveStack = stackBuff;
-            if (_workString.Length <= index)
+            // Выход в цифрах
+            ShowChangeOut(queue);
+
+            if (_workString.Length <= index && _end)
             {
                 _isFirst = true;
                 _dictionaryForNumber.Clear();
                 _liveIndex = 0;
                 _liveQueue.Clear();
                 _liveStack.Clear();
+                _end = false;
             }
 
-            return result.ToString();
+            return result;
         }
 
         private void Pop(Stack<char> stack, Queue<char> queue, char element)
@@ -282,29 +286,73 @@ namespace Modelirovanie_1
             {
                 label_stack.Text = label_stack.Text + "\n" + c;
             }
-
-            // if (_mode)
-            //     await Task.Delay(MilliSeconds);
         }
 
-        private void button_Start(object sender, EventArgs e)
+        private string ShowQueue(Queue<char> queue)
+        {
+            label_postfix_symbol.Text = "";
+            var result = new StringBuilder();
+            foreach (var c in queue)
+                result.Append(c);
+            label_postfix_symbol.Text = result.ToString();
+            return result.ToString();
+        }
+
+        private void ShowChangeInputStr(int index, string workStr)
+        {
+            label_input_change.Text = "";
+            for (var i = index + 1; i < workStr.Length; i++)
+            {
+                if (_dictionaryForFunction.ContainsValue(workStr[i]))
+                {
+                    foreach (var c in _dictionaryForFunction.Where(c => c.Value == _workString[i]))
+                    {
+                        label_input_change.Text += c.Key;
+                    }
+                }
+                else if (_dictionaryForNumber.ContainsKey(workStr[i]))
+                {
+                    label_input_change.Text += _dictionaryForNumber[workStr[i]];
+                }
+                else
+                {
+                    label_input_change.Text += workStr[i];
+                }
+            }
+        }
+
+        private void ShowChangeOut(Queue<char> queue)
+        {
+            label_postfix_number.Text = "";
+            foreach (var c in queue)
+            {
+                if (_dictionaryForNumber.ContainsKey(c))
+                    label_postfix_number.Text += _dictionaryForNumber[c] + @" ";
+                else if (_dictionaryForFunction.ContainsValue(c))
+                {
+                    foreach (var ch in _dictionaryForFunction.Where(ch => ch.Value == c))
+                    {
+                        label_postfix_number.Text += ch.Key;
+                    }
+                }
+                else
+                    label_postfix_number.Text += c;
+            }
+        }
+
+        private async void button_Start(object sender, EventArgs e)
         {
             _dictionaryForNumber.Clear();
-            label_postfix.Text = TranslateToPostfix(_inputStr);
+            await TranslateToPostfix(_inputStr);
         }
 
         private void radioButton_Auto(object sender, EventArgs e) => _mode = false;
 
         private void radioButton_Step(object sender, EventArgs e) => _mode = true;
 
-
-        private void button_Stop(object sender, EventArgs e)
+        private async void button_Tact(object sender, EventArgs e)
         {
-        }
-
-        private void button_Tact(object sender, EventArgs e)
-        {
-            label_postfix.Text = TranslateToPostfix(_inputStr);
+            await TranslateToPostfix(_inputStr);
         }
     }
 }

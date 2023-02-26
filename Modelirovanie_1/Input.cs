@@ -280,13 +280,6 @@ namespace Modelirovanie_1
                         MessageBoxButtons.OK);
                     return true;
                 }
-
-                // if (char.IsDigit(c) && char.IsDigit(c2))
-                // {
-                //     MessageBox.Show(@"Подряд две переменные: " + c + @" " + c2, @"Ошибка!",
-                //         MessageBoxButtons.OK);
-                //     return true;
-                // }
             }
 
             return false;

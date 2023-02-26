@@ -33,16 +33,19 @@ namespace Modelirovanie_1
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.label_input = new System.Windows.Forms.Label();
-            this.label_postfix = new System.Windows.Forms.Label();
+            this.label_postfix_symbol = new System.Windows.Forms.Label();
             this.buttonTact = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
-            this.buttonStop = new System.Windows.Forms.Button();
             this.label_stack = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label_postfix_number = new System.Windows.Forms.Label();
+            this.label_input_change = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // but_input
@@ -65,11 +68,12 @@ namespace Modelirovanie_1
             // 
             // label2
             // 
-            this.label2.Location = new System.Drawing.Point(12, 68);
+            this.label2.Location = new System.Drawing.Point(14, 32);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(337, 23);
+            this.label2.Size = new System.Drawing.Size(224, 23);
             this.label2.TabIndex = 2;
             this.label2.Text = "Выходная строка (в постфиксной форме)";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label3
             // 
@@ -79,15 +83,6 @@ namespace Modelirovanie_1
             this.label3.TabIndex = 3;
             this.label3.Text = "Стек";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label4
-            // 
-            this.label4.Location = new System.Drawing.Point(352, 118);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(151, 23);
-            this.label4.TabIndex = 4;
-            this.label4.Text = "Таблица принятия решений:";
-            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label5
             // 
@@ -130,13 +125,13 @@ namespace Modelirovanie_1
             this.label_input.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.label_input.Click += new System.EventHandler(this.label_input_main);
             // 
-            // label_postfix
+            // label_postfix_symbol
             // 
-            this.label_postfix.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label_postfix.Location = new System.Drawing.Point(14, 91);
-            this.label_postfix.Name = "label_postfix";
-            this.label_postfix.Size = new System.Drawing.Size(403, 23);
-            this.label_postfix.TabIndex = 9;
+            this.label_postfix_symbol.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.label_postfix_symbol.Location = new System.Drawing.Point(14, 91);
+            this.label_postfix_symbol.Name = "label_postfix_symbol";
+            this.label_postfix_symbol.Size = new System.Drawing.Size(222, 23);
+            this.label_postfix_symbol.TabIndex = 9;
             // 
             // buttonTact
             // 
@@ -158,16 +153,6 @@ namespace Modelirovanie_1
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button_Start);
             // 
-            // buttonStop
-            // 
-            this.buttonStop.Location = new System.Drawing.Point(652, 513);
-            this.buttonStop.Name = "buttonStop";
-            this.buttonStop.Size = new System.Drawing.Size(75, 23);
-            this.buttonStop.TabIndex = 12;
-            this.buttonStop.Text = "Стоп";
-            this.buttonStop.UseVisualStyleBackColor = true;
-            this.buttonStop.Click += new System.EventHandler(this.button_Stop);
-            // 
             // label_stack
             // 
             this.label_stack.BackColor = System.Drawing.SystemColors.ButtonHighlight;
@@ -177,30 +162,83 @@ namespace Modelirovanie_1
             this.label_stack.TabIndex = 13;
             this.label_stack.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             // 
+            // label4
+            // 
+            this.label4.Location = new System.Drawing.Point(455, 118);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(100, 23);
+            this.label4.TabIndex = 14;
+            this.label4.Text = "Исходная строка";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label6
+            // 
+            this.label6.Location = new System.Drawing.Point(14, 63);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(100, 23);
+            this.label6.TabIndex = 15;
+            this.label6.Text = "С символами";
+            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label7
+            // 
+            this.label7.Location = new System.Drawing.Point(255, 63);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(100, 23);
+            this.label7.TabIndex = 16;
+            this.label7.Text = "С цифрами";
+            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label_postfix_number
+            // 
+            this.label_postfix_number.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.label_postfix_number.Location = new System.Drawing.Point(255, 91);
+            this.label_postfix_number.Name = "label_postfix_number";
+            this.label_postfix_number.Size = new System.Drawing.Size(183, 23);
+            this.label_postfix_number.TabIndex = 17;
+            // 
+            // label_input_change
+            // 
+            this.label_input_change.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.label_input_change.Location = new System.Drawing.Point(455, 141);
+            this.label_input_change.Name = "label_input_change";
+            this.label_input_change.Size = new System.Drawing.Size(299, 23);
+            this.label_input_change.TabIndex = 18;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 549);
+            this.Controls.Add(this.label_input_change);
+            this.Controls.Add(this.label_postfix_number);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.label_stack);
-            this.Controls.Add(this.buttonStop);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.buttonTact);
-            this.Controls.Add(this.label_postfix);
+            this.Controls.Add(this.label_postfix_symbol);
             this.Controls.Add(this.label_input);
             this.Controls.Add(this.radioButton2);
             this.Controls.Add(this.radioButton1);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.but_input);
             this.Name = "MainForm";
-            this.Text = "Мультимедийная обучающая программа \"Трансляция алегбраческих выражений\"";
+            this.Text = "Мультимедийная обучающая программа \"Трансляция алгeбраических выражений\"";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
         }
+
+        private System.Windows.Forms.Label label_input_change;
+
+        private System.Windows.Forms.Label label_postfix_number;
+
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
 
         private System.Windows.Forms.Label label_stack;
 
@@ -208,9 +246,8 @@ namespace Modelirovanie_1
 
         private System.Windows.Forms.Button buttonTact;
         private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button buttonStop;
 
-        private System.Windows.Forms.Label label_postfix;
+        private System.Windows.Forms.Label label_postfix_symbol;
 
         private System.Windows.Forms.Label label_input;
 
