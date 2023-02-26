@@ -27,7 +27,7 @@ namespace Modelirovanie_1
             foreach (var s in InputStr)
                 result.Append(s);
             textBox_input.Text = result.ToString();
-            textBox_input.SelectionStart = _index++;
+            textBox_input.SelectionStart = ++_index;
             textBox_input.Focus();
         }
 
