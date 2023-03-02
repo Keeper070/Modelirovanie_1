@@ -161,6 +161,7 @@ namespace Modelirovanie_1
             this.label_stack.Size = new System.Drawing.Size(222, 286);
             this.label_stack.TabIndex = 13;
             this.label_stack.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.label_stack.Click += new System.EventHandler(this.label_stack_Click);
             // 
             // label4
             // 

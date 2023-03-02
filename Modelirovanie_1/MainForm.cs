@@ -165,7 +165,7 @@ namespace Modelirovanie_1
 
                 index++;
                 await Task.Delay(3000);
-            }
+            }   
 
             if (_workString.Length <= index)
             {
@@ -354,5 +354,11 @@ namespace Modelirovanie_1
         {
             await TranslateToPostfix(_inputStr);
         }
+
+        private void label_stack_Click(object sender, EventArgs e)
+        {
+            
+        }
+      
     }
 }
